@@ -1,0 +1,12 @@
+{
+  "name": "ems-login-plugin",
+  "version": "1.0.0",
+  "description": "EMS Login Plugin",
+  "main": "ems-login-plugin.js",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12",
+    "axios-cookiejar-support": "^4.0.7",
+    "tough-cookie": "^4.1.3"
+  }
+}
