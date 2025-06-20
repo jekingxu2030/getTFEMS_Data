@@ -45,15 +45,17 @@ class EMSLoginPlugin {
       };
 
       // 添加调试日志
-      console.log('登录数据:', loginData);
+      console.log('Login Data:', loginData);
 
       // 提交登录请求
       const loginResponse = await this.client.post(loginUrl, new URLSearchParams(loginData).toString());
-
+      if(loginResponse) {
+        console.log('Login Status:',loginResponse.statusText);
+      }
       // 简单判断登录是否成功（可根据实际情况调整）
       return loginResponse.status === 200;
     } catch (error) {
-      console.error('登录失败:', error.message);
+      console.error('Login Failed:', error.message);
       throw error;
     }
   }
@@ -70,13 +72,17 @@ class EMSLoginPlugin {
       const config = {
         url,
         method,
-        data: method === 'POST' ? new URLSearchParams(data).toString() : undefined
+        // GET请求使用params传递查询参数，POST请求使用data传递表单数据
+        [method === 'GET' ? 'params' : 'data']: method === 'GET' ? data : new URLSearchParams(data).toString()
       };
+
+      // 添加请求调试日志
+      console.log(`Sending${method}request:`, url, config[method === 'GET' ? 'params' : 'data']);
 
       const response = await this.client(config);
       return response.data;
     } catch (error) {
-      console.error('API请求失败:', error.message);
+      console.error('API Request Failed:', error.message);
       throw error;
     }
   }
