@@ -11,8 +11,10 @@ class EMSLoginPlugin {
       jar: this.jar,
       withCredentials: true,
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.289 Safari/537.36',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Referer': 'https://ems.thefit.com.cn/Module?Project=WD0000002',
+        'X-Requested-With': 'XMLHttpRequest'
       }
     }));
   }
