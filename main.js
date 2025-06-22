@@ -23,12 +23,26 @@ async function main() {
           method: 'GET',
           params: { project: 'WD0000002', module: 'Meter_Load', _t: Date.now().toString() }
         },
-        // 可以添加更多请求对象
-        // {
-        //   url: 'https://ems.thefit.com.cn/ems-api/other-endpoint',
-        //   method: 'POST',
-        //   params: { key: 'value' }
-        // }
+        {
+          url: 'https://ems.thefit.com.cn/ems-api/realtime',
+          method: 'GET',
+          params: { project: 'WD0000002', module: 'EMS', _t: Date.now().toString() }
+        },
+        {
+          url: 'https://ems.thefit.com.cn/ems-api/realtime',
+          method: 'GET',
+          params: { project: 'WD0000002', module: 'PCS', _t: Date.now().toString() }
+        },
+        {
+          url: 'https://ems.thefit.com.cn/ems-api/realtime',
+          method: 'GET',
+          params: { project: 'WD0000002', module: 'BMS', _t: Date.now().toString() }
+        },
+        {
+          url: 'https://ems.thefit.com.cn/ems-api/projects/tree',
+          method: 'GET',
+          params: { userId: '3a18e899-f3f3-8410-6432-5182e7e4483e' }
+        }
       ];
 
       // 处理请求队列的函数
@@ -38,7 +52,7 @@ async function main() {
           try {
             console.log(`正在处理第 ${index + 1}/${queue.length} 个请求: ${request.url}`);
             const responseData=await emsClient.request(request.url,request.method||'GET',request.params||{});
-            console.log('请求返回数据:', responseData);
+            console.log('请求返回数据:', responseData.code);
             results.push({
               index,
               url: request.url,
