@@ -73,7 +73,7 @@ async function main() {
           try {
             console.log(`正在处理第 ${index + 1}/${queue.length} 个请求: ${request.url}`);
             const responseData=await emsClient.request(request.url,request.method||'GET',request.params||{});
-           if(index===5){
+           if(index===5 || index===6){
              console.log('请求返回数据:',responseData);
            } else {
              console.log('请求返回数据:',responseData.code);
