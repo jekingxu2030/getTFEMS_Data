@@ -21,7 +21,7 @@ async function main() {
         {
           url: 'https://ems.thefit.com.cn/ems-api/realtime',
           method: 'GET',
-          params: { project: 'WD0000002', module: 'Meter_Load', _t: '1750412234263' }
+          params: { project: 'WD0000002', module: 'Meter_Load', _t: Date.now().toString() }
         },
         // 可以添加更多请求对象
         // {
@@ -37,16 +37,13 @@ async function main() {
         for (const [index, request] of queue.entries()) {
           try {
             console.log(`正在处理第 ${index + 1}/${queue.length} 个请求: ${request.url}`);
-            const response = await client.request(
-              request.url,
-              request.method || 'GET',
-              request.params || {}
-            );
+            const responseData=await emsClient.request(request.url,request.method||'GET',request.params||{});
+            console.log('请求返回数据:', responseData);
             results.push({
               index,
               url: request.url,
               success: true,
-              data: response
+              data: responseData.data
             });
             console.log(`第 ${index + 1} 个请求成功`);
           } catch (error) {

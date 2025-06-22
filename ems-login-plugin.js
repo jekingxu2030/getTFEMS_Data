@@ -24,7 +24,7 @@ class EMSLoginPlugin {
    * @param {string} password - 密码
    * @returns {Promise<boolean>} 登录是否成功
    */
-  async login(loginUrl, username, password) {
+  async login(loginUrl, username, password) { //登录方法
     try {
       // 先获取登录页面，可能需要提取CSRF令牌
       const response = await this.client.get(loginUrl);
@@ -45,7 +45,7 @@ class EMSLoginPlugin {
       };
 
       // 添加调试日志
-      console.log('Login Data:', loginData);
+      // console.log('Login Data:', loginData);
 
       // 提交登录请求
       const loginResponse = await this.client.post(loginUrl, new URLSearchParams(loginData).toString());
@@ -67,7 +67,7 @@ class EMSLoginPlugin {
    * @param {object} data - 请求数据
    * @returns {Promise<object>} 请求响应数据
    */
-  async request(url, method = 'GET', data = {}) {
+  async request(url, method = 'GET', data = {}) {   //数据请求方法
     try {
       const config = {
         url,
