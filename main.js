@@ -25,7 +25,7 @@ async function main() {
         { url: 'https://ems.thefit.com.cn/protocol/akr_meter_ADL400.js?1',method: 'GET',params: {} },
         { url: 'https://ems.thefit.com.cn/protocol/haiwu_ac_v0_5.js?1',method: 'GET',params: {} },
         { url: 'https://ems.thefit.com.cn/ems-api/realtime',method: 'GET',params: { project: 'WD0000002',module: 'PCS',_t: Date.now().toString() } },
-        { url: 'https://ems.thefit.com.cn/api/app/alarm/search-list?skipCount=0&maxResultCount=9999&key=IsAcked%3Afalse%7CIsResumed%3Afalse%7CModule%3APCS', method: 'GET', params: {} },
+        { url: 'https://ems.thefit.com.cn/api/app/alarm/search-list?skipCount=0&maxResultCount=9999&key=IsAcked%3Afalse%7CIsResumed%3Afalse%7CModule%3APCS',method: 'GET',params: {} },
         {
           url: 'https://ems.thefit.com.cn/ems-api/realtime',
           method: 'GET',
@@ -71,8 +71,11 @@ async function main() {
             measurePoints: 'BMS-Soc',
             group: '1m'
           }
-        }
-      ];
+        },
+        { url: 'https://ems.thefit.com.cn/api/app/profit/search-list',method: 'GET',params: { skipCount: 0,maxResultCount: 100,key: '2025/06/01 - 2025/06/30',sorting: 'reportDate desc',_t: Date.now().toString() } },
+        { url: 'https://ems.thefit.com.cn/api/app/config/list',method: 'POST',data: { project: 'WD0000002' } },
+        { url: 'https://ems.thefit.com.cn/ems-api/realtime',method: 'GET',params: { project: 'WD0000002',module: 'EMS',measurePoints: 'EMS-200,EMS-201,EMS-202,EMS-203,EMS-204,EMS-205,EMS-209,EMS-210,EMS-211,EMS-212,EMS-213,EMS-217,EMS-218,EMS-219,EMS-220,EMS-221,EMS-225,EMS-226,EMS-227,EMS-228,EMS-229,EMS-233,EMS-234,EMS-235,EMS-236,EMS-237,EMS-241,EMS-242,EMS-243,EMS-244,EMS-245,EMS-249,EMS-250,EMS-251,EMS-252,EMS-253,EMS-257,EMS-258,EMS-259,EMS-260,EMS-261,EMS-265,EMS-266,EMS-267,EMS-268,EMS-269,EMS-273,EMS-274,EMS-275,EMS-276,EMS-277,EMS-369,EMS-370,EMS-371,EMS-372,EMS-373,EMS-374,EMS-375,EMS-376,EMS-377,EMS-378,EMS-379,EMS-380,EMS-381,EMS-382,EMS-383,EMS-384,EMS-385,EMS-386,EMS-351,EMS-352,EMS-353,EMS-354,EMS-355,EMS-356,EMS-357,EMS-358,EMS-359,EMS-360,EMS-361,EMS-362,EMS-363,EMS-364,EMS-365,EMS-366,EMS-367,EMS-368,EMS-568' } },
+  ];
 
       // 处理请求队列的函数
       async function processRequestQueue(client,queue) {
@@ -102,6 +105,12 @@ async function main() {
             });
             console.error(`第 ${index+1} 个请求失败:`,error.message);
           }
+          // 每次请求间隔500ms
+          if(index<queue.length-1) {
+            await new Promise(resolve => setTimeout(resolve,500));
+            console.log('等待500ms...');
+          }
+
         }
         return results;
       }
