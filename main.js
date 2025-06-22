@@ -42,6 +42,27 @@ async function main() {
           url: 'https://ems.thefit.com.cn/ems-api/projects/tree',
           method: 'GET',
           params: { userId: '3a18e899-f3f3-8410-6432-5182e7e4483e' }
+        },
+        {
+          url: 'https://ems.thefit.com.cn/ems-api/actual',
+          method: 'POST',
+          params: {
+            _t: Date.now().toString(),
+            project: 'WD0000002',
+            measurePoints: 'PCS-ActivePower',
+            group: '1m'
+          }
+        }
+        ,
+        {
+          url: 'https://ems.thefit.com.cn/ems-api/actual',
+          method: 'POST',
+          params: {
+            _t: Date.now().toString(),
+            project: 'WD0000002',
+            measurePoints: 'BMS-Soc',
+            group: '1m'
+          }
         }
       ];
 
@@ -52,7 +73,11 @@ async function main() {
           try {
             console.log(`正在处理第 ${index + 1}/${queue.length} 个请求: ${request.url}`);
             const responseData=await emsClient.request(request.url,request.method||'GET',request.params||{});
-            console.log('请求返回数据:', responseData.code);
+           if(index===5){
+             console.log('请求返回数据:',responseData);
+           } else {
+             console.log('请求返回数据:',responseData.code);
+           }
             results.push({
               index,
               url: request.url,
